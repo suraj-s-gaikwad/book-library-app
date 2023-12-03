@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Library</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div id="app" class="container mt-4">
+    <h1>Book Library</h1>
+    <div class="input-group mb-3">
+      <input type="text" id="bookTitle" class="form-control" placeholder="Book Title">
+      <input type="text" id="bookAuthor" class="form-control" placeholder="Author">
+      <input type="number" id="publicationYear" class="form-control" placeholder="Publication Year">
+      <div class="input-group-append">
+        <button id="addBookButton" class="btn btn-primary">Add Book</button>
+      </div>
+    </div>
+    <ul id="bookList" class="list-group"></ul>
+  </div>
+
+  <script>
+    const bookTitleInput = document.getElementById('bookTitle');
+    const bookAuthorInput = document.getElementById('bookAuthor');
+    const publicationYearInput = document.getElementById('publicationYear');
+    const addBookButton = document.getElementById('addBookButton');
+    const bookList = document.getElementById('bookList');
+
+    addBookButton.addEventListener('click', () => {
+      const title = bookTitleInput.value;
+      const author = bookAuthorInput.value;
+      const publicationYear = publicationYearInput.value;
+
+      if (!title || !author || isNaN(publicationYear)) {
+        alert('Please enter valid book details.');
+        return;
+      }
+
+      const listItem = document.createElement('li');
+      listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+      listItem.innerHTML = `<strong>${title}</strong> by ${author}, Year: ${publicationYear}
+                <button class="btn btn-danger" onclick="removeBook(event)">Remove</button>`;
+      bookList.appendChild(listItem);
+
+      bookTitleInput.value = '';
+      bookAuthorInput.value = '';
+      publicationYearInput.value = '';
+    });
+
+    function removeBook(event) {
+      const listItem = event.target.parentNode;
+      bookList.removeChild(listItem);
+    }
+  </script>
+</body>
+
+</html>
